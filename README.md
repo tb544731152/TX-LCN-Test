@@ -1,24 +1,32 @@
-# SpringCloud+SpringBoot+LCN项目骨架
-
-   [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
-   [![Badge](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu/#/zh_CN)
-
+# SpringCloud+SpringBoot+LCN项目骨架（代码 git clone 别人代码，结合自己项目进行修改，解决存在的环境问题和分布式事务问题）
 　　SpringCloud（Finchley.RELEASE）+SpringBoot（2.0.7）项目骨架，eureka+config+bus+feign+ribbon+hystrix+zuul等组件支持，MyBatis+Redis+MongoDB+RabbitMQ+Elasticsearch等集群配置，LCN（5.0.2.RELEASE）分布式事务框架，支持Docker部署。<br>
-　　作者QQ：[709931138]() 作者邮箱：[709931138@qq.com]()<br>
-　　具体业务代码参见：https://github.com/D2C-Cai/shop-mall 支持平滑分布式改造
+　　作者QQ：[544731152]() 作者邮箱：[544731152@qq.com]()<br>
+    交流qq群：172593706
 
 ## 背景介绍
-　　**骨架项目的精髓：框架流行，版本要新，配置清晰，代码简洁，案例完整。依赖最小化，不拖泥带水，不自以为是。**
+　　**骨架项目的精髓：采用分布式框架springCloud学习,分布式事务 TX-Cln解决分布式事务的测试DEMO。**
 
 ## 环境介绍
-　　此项目适用于有一定开发基础的开发者使用，项目内使用的框架和中间件都是市面上非常流行的，如何搭建环境的教程不作详细介绍，请开发者自行搭建必要的环境。<br>
-　　作者开发电脑局域网IP：192.168.5.20，服务器的局域网IP：192.168.0.146，要保证网络畅通，防火墙配置正确。<br>
-　　这里只给出几点建议：Linux服务器作者选用CentOS版本7，JDK选用1.8，MySql数据库5.6建议直接安装在系统上。一些中间件不论单机或集群请务必安装启动：Redis, Mongodb, Rabbitmq, Elasticsearch。
-还有一个[tx-manager]()，项目里带了[txlcn-tm-5.0.2.RELEASE.jar]()，注意解压找到application.properties后修改配置，需要redis和mysql，这个是LCN分布式事务的管理服务端，LCN5.0以上版本是普通的SpringBoot项目，去官网下载源码，mvn打包启动就行。<br>
-　　下面会给出Docker容器中快捷安装的方案，注意容器时区，以及目录的映射，[命令只是建议，不要照抄]()！
-
-
-# 项目简介
+　　此项目适用于有一定开发基础的开发者使用，项目内使用的框架和中间件都是市面上非常流行的，如何搭建环境的教程不作详细介绍，请开发者自行搭建必要的环境。
+  （可以根据自己需求选择不同版本）
+## 开发环境
+| 名称 | 版本 |
+| ---- | ---- |
+| 服务器 | Linux(Centos6.5) |
+| JDK | 1.8 |
+| MySql | 5.6 |
+| Redis | 3.2 |
+| Mongodb | 3.2 |
+| Elasticsearch | 5.6.8 |
+| Elasticsearch-ik | 5.6.x |
+| Elasticsearch-head | 5 |
+| Rabbitmq | 3.7.8 |
+　　这里只给出几点建议：
+   1.[tx-manager]()，项目里带了[txlcn-tm-5.0.2.RELEASE.jar]()，注意解压找到application.properties后修改配置，需要redis和mysql，这个是LCN分布式事务的管理服务端，LCN5.0
+   2.项目中分部署事务测试接口：
+   http://localhost:8002/api/order/tx1?sn=Q123456&productId=2&memberId=2
+   3.建议先启动txlcn-tm-5.0.2.RELEASE.jar
+   4.如果Elasticsearch 的版本是6.x ，同一个索引下不可以建立多个type, 7.取消的type
 
 ## 模块功能
 | 名称 | 介绍 | 说明 | 
@@ -36,19 +44,10 @@
 | ---- | ---- | ---- |
 | SpringCloud | Finchley.RELEASE | 与SpringBoot版本对应 |
 | SpringBoot | 2.0.7 | 与SpringCloud版本对应 |
-| MybatisPlus | 3.0.7.1 | Mybatis升级版，官网：https://mp.baomidou.com <br>用法详见：https://github.com/D2C-Cai/shop-mall |
+| MybatisPlus | 3.0.7.1|
 | TX-LCN | 5.0.2.RELEASE | 高性能的分布式事务解决方案，官网：http://www.txlcn.org/zh-cn |
 
-## 中间件版本
-| 名称 | 版本 |
-| ---- | ---- |
-| MySql | 5.6 |
-| Redis | 3.2 |
-| Mongodb | 3.2 |
-| Elasticsearch | 5.6.8 |
-| Elasticsearch-ik | 5.6.x |
-| Elasticsearch-head | 5 |
-| Rabbitmq | 3.7.8 |
+
 
 ## 整合TX-LCN5.0
 
@@ -431,14 +430,4 @@ https://github.com/medcl/elasticsearch-analysis-ik/releases 去这里下载一�
 
 > http://192.168.5.20:9001/apigateway/order/api/order?sn=Q123456
 
-License
----
 
-[反 996 许可证](LICENSE)
-
- - 此许可证的目的是阻止违反劳动法的公司使用许可证下的软件或代码，并强迫这些公司权衡他们的行为。
- - 在此处查看反 996 许可证下的[完整项目列表](awesomelist/projects.md)
- - 此许可证的灵感来源于 @xushunke：[Design A Software License Of Labor Protection -- 996ICU License](https://github.com/996icu/996.ICU/pull/15642)
- - 当前版本反 996 许可证由 [伊利诺伊大学法学院的 Katt Gu, J.D](https://scholar.google.com.sg/citations?user=PTcpQwcAAAAJ&hl=en&oi=ao) 起草；由 [Dimension](https://www.dimension.im) 的首席执行官 [Suji Yan](https://www.linkedin.com/in/tedkoyan/) 提供建议。
- - 该草案改编自 MIT 许可证，如需更多信息请查看 [Wiki](https://github.com/kattgu7/996-License-Draft/wiki)。此许可证旨在与所有主流开源许可证兼容。
- - 如果你是法律专业人士，或是任何愿意为未来版本做出直接贡献的人，请访问 [Anti-996-License-1.0](https://github.com/kattgu7/996-License-Draft)。感谢你的帮助。
