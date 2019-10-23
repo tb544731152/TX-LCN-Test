@@ -1,0 +1,121 @@
+# tomcat
+server:
+  port: 8003
+
+# eureka
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+  client:
+    service-url:
+      defaultZone: http://192.168.1.200:1001/eureka/
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# tx-lcn
+tx-lcn:
+  client:
+    manager-address: 192.168.1.200:8070
+    resource-order: 0
+  logger:
+    enabled: false
+  message:
+    netty:
+      wait-time: 5000
+  springcloud:
+    loadbalance:
+      enabled: true
+
+# spring
+spring:
+  application:
+    name: service-product
+
+  # database
+  datasource:
+    url: jdbc:mysql://192.168.1.107:3306/mall?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 1q2w3e4r5t
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+
+  # redis
+  redis:
+    database: 0
+    host: 192.168.1.200
+    port: 6379
+    jedis:
+      pool:
+        max-active: 1000
+        max-idle: 100
+        min-idle: 1
+
+  data:
+    # mongodb
+    mongodb:
+      uri: mongodb://39.97.161.132:27017/mall
+
+    # elasticsearch
+    elasticsearch:
+      cluster-name: d2cmall-es
+      cluster-nodes: 192.168.1.200:9300
+
+  # rabbitmq
+  rabbitmq:
+    host: 192.168.1.200
+    port: 5672
+    username: root
+    password: 123456
+
+# mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.d2c.*.*.model
+  global-config:
+    db-config:
+      id-type: id_worker
+      field-strategy: not_null
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+    sql-parser-cache: true
+  configuration:
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+######################################################### cluster ######################################################
+
+#  # redis
+#  redis:
+#    database: 0
+#    jedis:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#    cluster:
+#      nodes:
+#        - 192.168.0.143:7001
+#        - 192.168.0.143:7002
+#        - 192.168.0.143:7003
+#        - 192.168.0.143:7004
+#        - 192.168.0.143:7005
+#        - 192.168.0.143:7006
+
+#  data:
+#  # mongodb
+#    mongodb:
+#      uri: mongodb://192.168.0.143:27017,192.168.0.144:27017,192.168.0.145:27017/shop
+
+#  # elasticsearch
+#    elasticsearch:
+#      cluster-name: d2cmall-es
+#      cluster-nodes: 192.168.0.143:9300,192.168.0.144:9300,192.168.0.145:9300
+
